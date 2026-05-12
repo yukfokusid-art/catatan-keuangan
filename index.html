@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Website enhancer foto HD instan berbasis browser. Upload foto, tingkatkan resolusi, ketajaman, warna, lalu download hasilnya." />
+  <title>Instant HD Photo Enhancer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orb orb-one"></div>
+  <div class="orb orb-two"></div>
+  <div class="orb orb-three"></div>
+
+  <header class="site-header">
+    <a href="#" class="brand" aria-label="Instant HD Photo Enhancer">
+      <span class="brand-icon">HD</span>
+      <span>
+        <strong>FotoHD</strong>
+        <small>Instant Enhancer</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigasi utama">
+      <a href="#tools">Tools</a>
+      <a href="#hasil">Preview</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <div class="badge">
+          <span></span>
+          Proses langsung di browser, tanpa upload ke server
+        </div>
+        <h1>Ubah foto buram jadi terlihat lebih <em>HD</em> dalam sekali klik.</h1>
+        <p>
+          Tingkatkan resolusi, detail, ketajaman, warna, dan pencahayaan foto secara instan.
+          Cocok untuk foto produk, profil, katalog, tugas, dan kebutuhan posting harian.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#tools">Mulai Enhance</a>
+          <a class="btn ghost" href="#faq">Lihat cara kerja</a>
+        </div>
+        <div class="stats">
+          <div><strong>2x - 4x</strong><span>Upscale</span></div>
+          <div><strong>100%</strong><span>Client-side</span></div>
+          <div><strong>PNG/JPG</strong><span>Output</span></div>
+        </div>
+      </div>
+
+      <div class="hero-card reveal" aria-label="Kartu fitur enhancer foto">
+        <div class="preview-stack">
+          <div class="mini-window before-window">
+            <div class="window-top"><span></span><span></span><span></span></div>
+            <div class="fake-photo blurry"></div>
+            <p>Sebelum</p>
+          </div>
+          <div class="mini-window after-window">
+            <div class="window-top"><span></span><span></span><span></span></div>
+            <div class="fake-photo sharp"></div>
+            <p>Sesudah HD</p>
+          </div>
+        </div>
+        <div class="ai-chip">Smart sharpen · Color boost · Upscale</div>
+      </div>
+    </section>
+
+    <section id="tools" class="workspace reveal">
+      <div class="panel upload-panel">
+        <div class="section-title">
+          <span>01</span>
+          <div>
+            <h2>Upload Foto</h2>
+            <p>Pilih foto dari perangkat kamu, lalu atur kualitas hasilnya.</p>
+          </div>
+        </div>
+
+        <label class="dropzone" id="dropzone" for="imageInput">
+          <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp" />
+          <div class="drop-icon">＋</div>
+          <h3>Tarik foto ke sini atau klik untuk upload</h3>
+          <p>Support JPG, PNG, dan WEBP. Semakin bagus foto awal, semakin bagus hasilnya.</p>
+          <span id="fileInfo">Belum ada foto dipilih</span>
+        </label>
+
+        <div class="control-grid">
+          <label class="control-card">
+            <span>Resolusi</span>
+            <select id="scaleSelect">
+              <option value="2">HD 2x - Cepat</option>
+              <option value="3" selected>Ultra HD 3x - Seimbang</option>
+              <option value="4">Max HD 4x - Detail</option>
+            </select>
+          </label>
+
+          <label class="control-card">
+            <span>Format Download</span>
+            <select id="formatSelect">
+              <option value="image/png">PNG - Kualitas tinggi</option>
+              <option value="image/jpeg">JPG - Ukuran ringan</option>
+              <option value="image/webp">WEBP - Modern</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="sliders">
+          <label>
+            <div><span>Ketajaman</span><b id="sharpValue">70</b></div>
+            <input id="sharpness" type="range" min="0" max="100" value="70" />
+          </label>
+          <label>
+            <div><span>Kecerahan</span><b id="brightValue">8</b></div>
+            <input id="brightness" type="range" min="-30" max="30" value="8" />
+          </label>
+          <label>
+            <div><span>Kontras</span><b id="contrastValue">12</b></div>
+            <input id="contrast" type="range" min="-30" max="50" value="12" />
+          </label>
+          <label>
+            <div><span>Saturasi</span><b id="satValue">10</b></div>
+            <input id="saturation" type="range" min="-30" max="50" value="10" />
+          </label>
+        </div>
+
+        <button class="btn primary wide" id="enhanceBtn" disabled>
+          <span class="btn-loader" aria-hidden="true"></span>
+          <span class="btn-text">Jadikan Foto HD</span>
+        </button>
+
+        <div class="progress-wrap" id="progressWrap" aria-hidden="true">
+          <div class="progress-label"><span>Memproses foto...</span><b id="progressText">0%</b></div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+        </div>
+      </div>
+
+      <div class="panel result-panel" id="hasil">
+        <div class="section-title">
+          <span>02</span>
+          <div>
+            <h2>Preview Hasil</h2>
+            <p>Geser slider untuk membandingkan foto asli dan hasil HD.</p>
+          </div>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <div>🖼️</div>
+          <h3>Preview akan muncul di sini</h3>
+          <p>Upload foto terlebih dahulu, lalu klik tombol enhance.</p>
+        </div>
+
+        <div class="compare" id="compareBox" hidden>
+          <img id="beforeImg" alt="Foto sebelum diproses" />
+          <div class="after-layer" id="afterLayer">
+            <img id="afterImg" alt="Foto setelah diproses menjadi HD" />
+          </div>
+          <input id="compareSlider" type="range" min="0" max="100" value="50" aria-label="Slider perbandingan sebelum dan sesudah" />
+          <div class="compare-handle" id="compareHandle"><span></span></div>
+          <span class="tag left">Before</span>
+          <span class="tag right">After HD</span>
+        </div>
+
+        <div class="result-actions" id="resultActions" hidden>
+          <button class="btn ghost" id="resetBtn">Upload Foto Lain</button>
+          <button class="btn primary" id="downloadBtn">Download Hasil HD</button>
+        </div>
+
+        <div class="quality-note">
+          <strong>Catatan jujur:</strong> website ini melakukan upscale, sharpen, color boost, dan contrast enhancement di browser. Untuk restorasi AI sungguhan seperti memperbaiki wajah rusak parah, perlu model AI/API tambahan.
+        </div>
+      </div>
+    </section>
+
+    <section class="features reveal">
+      <article>
+        <span>⚡</span>
+        <h3>Super cepat</h3>
+        <p>Semua proses berjalan di perangkat pengguna, jadi tidak perlu server berat.</p>
+      </article>
+      <article>
+        <span>🔐</span>
+        <h3>Privasi aman</h3>
+        <p>Foto tidak dikirim ke database atau backend. Prosesnya langsung di browser.</p>
+      </article>
+      <article>
+        <span>🎚️</span>
+        <h3>Bisa diatur</h3>
+        <p>Atur ketajaman, kontras, saturasi, brightness, resolusi, dan format output.</p>
+      </article>
+    </section>
+
+    <section id="faq" class="faq reveal">
+      <div class="section-title center">
+        <span>FAQ</span>
+        <div>
+          <h2>Pertanyaan Singkat</h2>
+          <p>Beberapa hal penting sebelum kamu deploy.</p>
+        </div>
+      </div>
+
+      <div class="faq-list">
+        <details open>
+          <summary>Apakah ini benar-benar bisa bikin foto jadi HD?</summary>
+          <p>Bisa meningkatkan tampilan foto agar terlihat lebih tajam dan besar resolusinya. Namun ini bukan restorasi AI server-side, jadi foto yang sangat blur tetap punya batas kualitas.</p>
+        </details>
+        <details>
+          <summary>Bisa deploy di Cloudflare Pages?</summary>
+          <p>Bisa. Upload seluruh isi folder ini ke Cloudflare Pages, karena websitenya hanya HTML, CSS, dan JavaScript.</p>
+        </details>
+        <details>
+          <summary>Apakah butuh database?</summary>
+          <p>Tidak. Website ini tidak butuh database karena prosesnya langsung di browser pengguna.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© <span id="year"></span> FotoHD Instant Enhancer. Built for fast static deployment.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
